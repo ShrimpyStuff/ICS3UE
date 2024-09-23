@@ -18,5 +18,19 @@ while True:
             break
     except ValueError:
         print("Not an Integer")
+del num
 
 #challenge 3
+total = 0;
+num0 = int(input("Give me a number to add to the total: "))
+total += num0
+while True:
+    num1 = int(input("Give me another input: "))
+    total += num1
+    answer = input("Do you want to enter another number (y/n): ").lower()
+    if answer != "y":
+        break
+print(total)
+del total
+
+#challenge 4
