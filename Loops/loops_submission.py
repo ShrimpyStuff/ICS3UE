@@ -38,7 +38,7 @@ while True:
 
 #while
 #challenge 3
-total = 0;
+total = 0
 num0 = int(input("Give me a number to add to the total: "))
 total += num0
 while True:
