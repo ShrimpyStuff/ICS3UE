@@ -20,7 +20,7 @@ def storageOptions():
             global options
             print("This plan can get additional storage options")
             choice = input("")
-            if (choice == "no" or "0"):
+            if (choice in ["no", "0"]):
                 break
             elif (choice == "1"):
                 total += 200
@@ -60,23 +60,31 @@ def insurance(package):
 def data():
     pass
 
-print("Welcome to the Phone Shop!")
-while True:
-    try:
-        tradeIn = input("Would you like to trade in a device for $40? (y or n): ").lower()
-        if tradeIn == "y":
-            total -= 40
-        package = input("Choose a phone package from the following\nMcBasic($50),\nAverage Joe($150),\nRich Kid Pro($800)\nEnter Selection Here: ").lower()
-        phone(package)
-        print(f"This package comes with {options[package]["storage"]}GB of storage")
-        if package != "mcbasic":
-            storageOptions()
-            if package == "rich kid pro":
-                extraDiamonds()
-            cloudDataBackup()
-        phoneCase()
-        charger()
-        
-        break
-    except ValueError as e:
-        print(e)
+def main():
+    global total
+    global monthly
+    global options
+
+    print("Welcome to the Phone Shop!")
+    while True:
+        try:
+            tradeIn = input("Would you like to trade in a device for $40? (y or n): ").lower()
+            if tradeIn == "y":
+                total -= 40
+            package = input("Choose a phone package from the following\nMcBasic($50),\nAverage Joe($150),\nRich Kid Pro($800)\nEnter Selection Here: ").lower()
+            phone(package)
+            print(f"This package comes with {options[package]["storage"]}GB of storage")
+            if package != "mcbasic":
+                storageOptions()
+                if package == "rich kid pro":
+                    extraDiamonds()
+                cloudDataBackup()
+            phoneCase()
+            charger()
+            
+            print(total)
+            break
+        except ValueError as e:
+            print(e)
+
+main()
