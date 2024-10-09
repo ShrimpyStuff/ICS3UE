@@ -148,11 +148,20 @@ def main():
     global options
 
     print("Welcome to the Phone Shop!")
+    
     while True:
         try:
             tradeIn = input("Would you like to trade in a device for $40? (Y or N): ").lower()
             if tradeIn == "y":
                 total -= 40
+                break
+            elif tradeIn == "n":
+                break
+            raise Exception("Not a valid choice")
+        except Exception as e:
+            print(f"\033[91mError: {e}\033[0m")
+    while True:
+        try:
             package = input("Choose a phone package from the following\nMcBasic($50),\nAverage Joe($150),\nRich Kid Pro($800)\nEnter Selection Here: ").lower()
             phone(package)
             print(f"This package comes with {options[package]["storage"]}GB of storage")
