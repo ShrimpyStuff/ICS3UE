@@ -63,3 +63,11 @@ def cone_sa(radius: float, height: float = 10):
         return ans
     except not KeyboardInterrupt as e:
         print("An error occured:", e)
+
+
+def main():
+    """Calls all functions"""
+    print(f"{circle_area()}", f"{circle_circumference()}")
+    print(f"{cylinder_volume()}", f"{cylinder_sa()}")
+    print(f"{sphere_volume()}", f"{sphere_sa()}")
+    print(f"{cone_volume()}", f"{cone_sa()}")

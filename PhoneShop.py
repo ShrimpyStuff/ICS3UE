@@ -6,6 +6,7 @@ monthly = 0;
 options = {"mcbasic": {"price": 50, "storage": 2, "insurance": 1}, "average joe":{"price": 150, "storage": 8, "insurance": 5}, "rich kid pro":{"price": 800, "storage": 32, "insurance": 20}}
 
 def phone(package):
+    """Prices the input phone plan"""
     global total
     global monthly
     global options
@@ -15,6 +16,7 @@ def phone(package):
 
 
 def storageOptions():
+    """Additional storage options for average and rich plans"""
     while True:
         try:
             global total
@@ -35,6 +37,7 @@ def storageOptions():
             print(f"\033[91mError: {e}\033[0m")
 
 def extraDiamonds():
+    """Adds extra diamonds to the rich plan"""
     global total
     while True:
         try:
@@ -49,6 +52,7 @@ def extraDiamonds():
             print(f"\033[91mError: {e}\033[0m")
 
 def cloudDataBackup():
+    """Sells cloud data backup and checks email using regex"""
     global total
     while True:
         try:
@@ -64,6 +68,7 @@ def cloudDataBackup():
             while True:
                 try:
                     email = input("Please enter an email to register the cloud backup: ")
+                    #regex pattern for proper email format
                     if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
                         raise Exception("Not a valid email")
                     break
@@ -74,6 +79,7 @@ def cloudDataBackup():
             print(f"\033[91mError: {e}\033[0m")
 
 def phoneCase():
+    """Offers the two case types to the user"""
     global total
     while True:
         try:
@@ -91,6 +97,7 @@ def phoneCase():
             print(f"\033[91mError: {e}\033[0m")
 
 def charger():
+    """Offers high-speed charger"""
     global total
     while True:
         try:
@@ -105,6 +112,7 @@ def charger():
             print(f"\033[91mError: {e}\033[0m")
 
 def insurance(package):
+    """Prompts user for insurance using input package name for dynamic pricing"""
     global monthly
     while True:
         try:
@@ -118,11 +126,12 @@ def insurance(package):
             print(f"\033[91mError: {e}\033[0m")
 
 def data():
+    """Prompts user for data plans"""
     global monthly
     while True:
         try:
-            #This text is going to take sooo long to write and I really don't want to make a list for it
             print("We've started to offer data plans!")
+            #uses a list that I join because it makes it easier to write. I copy pasted the options and just split them into a list. Probably wasn't worth the effort
             data = ["Pay as you go ($0)", "1 GB ($10)", "2 GB ($15)", "5 GB ($40)", "20 GB ($150)"]
             choice = input(f"Our plans are listed below:\n{"\n".join(data)}\nEnter your selection:").lower()
             
@@ -143,6 +152,7 @@ def data():
             print(f"\033[91mError: {e}\033[0m")
             
 def main():
+    """The main function to start the phone shop"""
     global total
     global monthly
     global options
@@ -166,6 +176,7 @@ def main():
             phone(package)
             print(f"This package comes with {options[package]["storage"]}GB of storage")
             if package != "mcbasic":
+                #Offers the choices that are only available to the average and rich packages
                 storageOptions()
                 if package == "rich kid pro":
                     extraDiamonds()
