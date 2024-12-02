@@ -82,38 +82,3 @@ while True:
         break
     except KeyError:
         print("Not a valid name or region. Maybe check your capitalization")
-
-#Question 7
-people = {}
-while len(people) < 4:
-    while True:
-        try:
-            name = input("Enter a name for a person: ")
-            age = float(input("What's their age: "))
-            shoe_size = float(input("Enter a shoe size: "))
-            people[name] = {"age": age, "shoe_size": shoe_size}
-            break
-        except ValueError:
-                print("Not a number")
-
-while True:
-    try:
-        name = input("Enter a name to check: ")
-        print(people[name])
-        break
-    except KeyError:
-        print("Not a valid name in the list")
-
-#Question 8
-for person in people:
-    print(people[person]["age"])
-
-#Question 9
-while True:
-    try:
-        name = input("Enter a name to delete: ")
-        people.pop(name)
-        break
-    except KeyError:
-        print("Not a valid name in the list")
-print(people)
