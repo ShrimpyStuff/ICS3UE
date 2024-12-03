@@ -1,5 +1,5 @@
 #Question 1
-weird = [[2, 5, 8], [3, 7, 4], [1, 6, 9], [4, 2, 0]]
+weird = [[2, 5, 8], [3, 7, 4], [1, 6, 9], [4, 2, 0]] #Chose a random name
 
 #Question 2
 while True:
@@ -17,11 +17,11 @@ while True:
 #Question 3
 while True:
     try:
-        row = int(input("Choose an row between 0 and 2: "))
+        row = int(input(f"Choose an row between 0 and 2: "))
         try: 
             print(weird[row])
             newVal = int(input("Choose a new integer value to append: "))
-            weird[row].append(newVal)
+            weird[row].append(newVal) # Just changing the original array
             print(weird[row])
             break
         except IndexError:
@@ -30,12 +30,14 @@ while True:
         print("Not an integer")
 
 #Question 4
+
+#A bunch of redundant error correction to get more descriptive errors messages.
 while True:
     try:
         row = int(input("Choose a row between 0 and 3: "))
         try: 
             print(weird[row])
-            column = int(input("Choose a column between 0 and 2: "))
+            column = int(input(f"Choose a column between 0 and {len(weird[row])-1}: ")) #Use fstring and len because maybe they changed the length of the row they needed
             try: 
                 print(weird[row][column])
                 while True:
@@ -66,7 +68,7 @@ sales = {"John":{"N":3056, "S":8463, "E": 8441, "W": 2694},"Tom": {"N": 4832, "S
 #Question 6
 while True:
     try:
-        name = input("Give a name: " + str(sales.key))
+        name = input("Give a name: " + str(list(sales.keys())) + ": ") #Had to convert to a string explicitly to concatenate
         region = input("Give a region: ")
         print("Current: " + str(sales[name][region]))
         while True:
