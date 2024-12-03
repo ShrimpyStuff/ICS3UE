@@ -19,21 +19,23 @@ def draw():
 
 def player_turn(rangeNum):
     while True:
+        deleting = False
         try:
-            turnLen = int(input("Choose a number between 1 and 3: "))
-            if turnLen > 0 and turnLen <= 3:
-                newNum = rangeNum-turnLen
-                if newNum < 0: newNum = 0
-                board[newNum:rangeNum] = ["X"]*turnLen
-                clear(1)
-                return newNum
+            if not deleting:
+                turnLen = int(input("Choose a number between 1 and 3: "))
+                if turnLen > 0 and turnLen <= 3:
+                    newNum = rangeNum-turnLen
+                    if newNum < 0: newNum = 0
+                    board[newNum:rangeNum] = ["X"]*turnLen
+                    clear(1)
+                    return newNum
             else:
                 print("Must be between 1 and 3")
                 time.sleep(1)
                 clear(2)
         except ValueError:
             print("Not an integer")
-            time.sleep(1)
+            time.sleep(0.5)
             clear(2)
 
 def bot_turn(rangeNum):
