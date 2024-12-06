@@ -5,6 +5,7 @@ ainame = random.choice(["David", "Ian", "Matthew", "Luke", "Mark", "Saul", "Levi
 
 board = ["-"]*24
 score = 0
+winStreak = 0
 name = ""
 
 def clear(lines: int = 1):
@@ -18,20 +19,19 @@ def draw():
     print("\033[32m" + " ".join(board) + "\033[0m")
 
 def player_turn(rangeNum):
+    global board
     while True:
-        deleting = False
         try:
-            if not deleting:
-                turnLen = int(input("Choose a number between 1 and 3: "))
-                if turnLen > 0 and turnLen <= 3:
-                    newNum = rangeNum-turnLen
-                    if newNum < 0: newNum = 0
-                    board[newNum:rangeNum] = ["X"]*turnLen
-                    clear(1)
-                    return newNum
+            turnLen = int(input("Choose a number between 1 and 3: "))
+            if turnLen > 0 and turnLen <= 3:
+                newNum = rangeNum-turnLen
+                if newNum < 0: newNum = 0
+                board[newNum:rangeNum] = ["X"]*turnLen
+                clear(1)
+                return newNum
             else:
                 print("Must be between 1 and 3")
-                time.sleep(1)
+                time.sleep(0.5)
                 clear(2)
         except ValueError:
             print("Not an integer")
@@ -39,6 +39,7 @@ def player_turn(rangeNum):
             clear(2)
 
 def bot_turn(rangeNum):
+    global board
     turnLen = random.randint(1,3)
     newNum = rangeNum-turnLen
     if newNum < 0: newNum = 0
@@ -46,7 +47,7 @@ def bot_turn(rangeNum):
     return newNum
 
 def game():
-    global name, score, board
+    global name, score, board, winStreak
     board = ["-"]*24
     lastNum = len(board)
     turn = bool(random.getrandbits(1)) #Apparently considerably faster than randInt. Makes sense
@@ -66,20 +67,22 @@ def game():
         else: lastNum = bot_turn(lastNum)
         turn = not turn
         draw()
-    print("Winner is " + (name if (board[0] == "X") else ainame))
-    if board[0] == "X":
+    print("Winner is " + (ainame if (board[0] == "X") else name))
+    if board[0] == "O":
+        winStreak += 1
         score += 1
+    else: winStreak = 0
 
 while True:
-    choice = input("Play Game. See Results. Exit. ").lower()
+    choice = input("A) Play Game. B) See Results. C) Exit. ").lower()
 
-    if choice == "play game":
+    if choice == "play game" or choice == "a":
         print("Hello. Welcome")
         name = input("What is your name? ")
         game()
-    elif choice == "see results":
-        print(f"You have won {score} total games!")
-    elif choice == "exit":
+    elif choice == "see results" or  choice == "b":
+        print(f"You have won {score} total games! You're winstreak is {winStreak}")
+    elif choice == "exit" or  choice == "c":
         break
     elif choice != "exit":
         print("Not a valid option")
