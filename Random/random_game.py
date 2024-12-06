@@ -59,15 +59,14 @@ def game():
 
     print("You start" if turn else "Bot starts")
     time.sleep(1)
-    clear(1)
-    print(" ".join(board))
-    while (board[0] == "-"):
-        if turn:
+    draw()
+    while (board[0] == "-"): #Just checks to see if last box is unchanged
+        if turn: #Random choice of who starts
             lastNum = player_turn(lastNum)
         else: lastNum = bot_turn(lastNum)
-        turn = not turn
+        turn = not turn #Flips it for next turn
         draw()
-    print("Winner is " + (ainame if (board[0] == "X") else name))
+    print("Winner is " + (ainame if (board[0] == "X") else name)) #Misère game so last person to take it is loser not winner
     if board[0] == "O":
         winStreak += 1
         score += 1
@@ -78,10 +77,10 @@ while True:
 
     if choice == "play game" or choice == "a":
         print("Hello. Welcome")
-        name = input("What is your name? ")
+        name = input("What is your name? ") #Asks name everytime but that's cause it doesn't matter for anything but saying some phrases
         game()
     elif choice == "see results" or  choice == "b":
-        print(f"You have won {score} total games! You're winstreak is {winStreak}")
+        print(f"You have won {score} total games! You're winstreak is {winStreak}") #Shows total wins and winstreak. Not all game outputs
     elif choice == "exit" or  choice == "c":
         break
     elif choice != "exit":
