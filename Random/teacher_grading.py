@@ -16,7 +16,7 @@ def add_assigment() -> None:
                     stu_name = input("What is the student's name? ").lower()
                     mark = int(input("What is their mark? (As an integer value) "))
                     if stu_name in students: #Checks if student is already part of it. Checks to see if stu_name exists before update cause that causes an error
-                        students[stu_name].update({name:{"percent": round(mark/total * 100, 3)}})
+                        students[stu_name].update({name:{"percent": round(mark/total * 100, 3)}}) #Round to a few decimal places instead of int so teacher could boost if wanted
                     else: students[stu_name] = {name:{"percent": round(mark/total * 100, 3)}}
                     marks.update({stu_name: round(mark/total * 100, 3)})
                     check = input("Do you want to add another student? (y/n) ").lower()
@@ -24,7 +24,7 @@ def add_assigment() -> None:
                 except ValueError:
                     print("Not an integer value")
             marks = list(marks.values())
-            assigments[name] = {"total": total, "marks": marks, "mean": st.mean(marks), "median": st.median(marks), "mode": st.mode(marks)}
+            assigments[name] = {"total": total, "marks": marks, "mean": st.mean(marks), "median": st.median(marks), "mode": st.mode(marks)} # Don't round cause already rounded. Use statistics library
             add_check = input("Do you want to add another assignment? (y/n) ").lower() #Question for another assignment
             additional = True if (add_check == "yes" or add_check == "y") else False
         except ValueError:
