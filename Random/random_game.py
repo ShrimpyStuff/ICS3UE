@@ -8,7 +8,7 @@ score = 0
 winStreak = 0
 name = ""
 
-def clear(lines: int = 1):
+def clear(lines: int = 1): #Just use ansi codes to delete the current line and previous line to make it look cool
     for x in range(lines):
             print("\033[K", end="", flush=True)
             print("\033[A", end="", flush=True)
@@ -16,7 +16,7 @@ def clear(lines: int = 1):
 
 def draw():
     clear(1)
-    print("\033[32m" + " ".join(board) + "\033[0m")
+    print("\033[32m" + " ".join(board) + "\033[0m") #Draw and clears the board so that it doesn't keep repeating farther down the terminal window
 
 def player_turn(rangeNum):
     global board
@@ -31,14 +31,14 @@ def player_turn(rangeNum):
                 return newNum
             else:
                 print("Must be between 1 and 3")
-                time.sleep(0.5)
+                time.sleep(0.5) #Just wait a little to allow for user to read but also user needs to wait for the line to dissapear before they do stuff
                 clear(2)
         except ValueError:
             print("Not an integer")
             time.sleep(0.5)
             clear(2)
 
-def bot_turn(rangeNum):
+def bot_turn(rangeNum): #Real simple bot turn. Just chooses a random turn length and checks to see if they overshoot. Otherwise fix it
     global board
     turnLen = random.randint(1,3)
     newNum = rangeNum-turnLen
