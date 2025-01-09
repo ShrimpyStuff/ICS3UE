@@ -1,17 +1,20 @@
 import os
 import csv
 
-f = open(os.path.dirname(__file__) + "/test.txt", "a")
+f = open(os.path.dirname(__file__) + "/test.txt", "a+")
 f.write("Now the file has more content!")
-f.close()
+f.flush()
+f.seek(0)
 
-with open(os.path.dirname(__file__) + "/file.csv", 'w', newline='') as csvfile:
-    spamwriter = csv.writer(csvfile, delimiter=' ',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
-    spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
+csvfile = open(os.path.dirname(__file__) + "/file.csv", "a+")
+spamwriter = csv.writer(csvfile, delimiter=',',
+                        quotechar='|', quoting=csv.QUOTE_MINIMAL)
+spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
+spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
 
-excel = csv.reader(open(os.path.dirname(__file__) + "/file.csv", "r"), delimiter=' ', quotechar='|')
+excel = csv.reader(f, delimiter=' ', quotechar='|')
 
 for row in excel:
     print(row)
+
+f.close()
