@@ -4,7 +4,7 @@ csvfile = open(os.path.dirname(__file__) + "/mathscores.csv", "a+")
 
 def update(name, score):
     csvwriter = csv.writer(csvfile, delimiter=",") #Using csv writer to write to the file with proper formatting
-    csvwriter.writerow([name, score, 5, score/5*100]) #Write row makess it a lot easier
+    csvwriter.writerow([name, score, 5, score/5*100]) #Write row makes it a lot easier
     csvfile.flush()
 
 def quiz():

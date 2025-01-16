@@ -13,9 +13,6 @@ with open(os.path.dirname(__file__) + "/Books.csv", "w") as csvfile:
 #Question 2
 with open(os.path.dirname(__file__) + "/Books.csv", "r") as csvfile:
     reader = csv.reader(csvfile, delimiter=",")
-    next(reader)  # Skip the header row
-    for line in reader:
-        print(line)
     name = input("Enter the name of the book: ")
     author = input("Enter the name of the author: ")
     while True:
@@ -29,6 +26,10 @@ with open(os.path.dirname(__file__) + "/Books.csv", "r") as csvfile:
         writer = csv.writer(writefile, delimiter=",")
         csvfile.seek(0)
         writer.writerow([sum(1 for line in reader)-1, name, author, year])
+    csvfile.seek(0)
+    next(reader)  # Skip the header row
+    for line in reader:
+        print(line)
 
 # Question 3
 while True:
@@ -59,13 +60,14 @@ with open(os.path.dirname(__file__) + "/Books.csv", "r") as csvfile:
     if len(instances) == 0:
         print("No books in the database by that author")
     else:
-        print(instances)
+        print(", ".join([instance["Book"] for instance in instances]))
+        
 
 # Question 4
 while True:
     try:
-        startYear = int(input("Enter the start year: "))
-        endYear = int(input("Enter the end year: "))
+        startYear = int(input("Enter the start year (included): "))
+        endYear = int(input("Enter the end year (included): "))
         if startYear > endYear:
             print("Please enter a valid range")
             continue
@@ -74,11 +76,12 @@ while True:
                 reader = csv.DictReader(csvfile)
                 column_name = "Year Released"
                 # Change all years to ints before this to make sure this int will always be true and not throw an error
-                instances = [row for row in reader if startYear <= int(row[column_name]) and int(row[column_name]) <= endYear] # Check range here
+                instances = [row for row in reader if startYear <= int(row[column_name]) <= endYear] # Check range here
                 if len(instances) == 0:
                     print("No books in the database during those years")
                 else:
-                    print(instances)
+                    print(", ".join([f"{instance["Book"]} by {instance["Author"]}" for instance in instances]))
+                    break
         
     except ValueError:
         print("Please enter a valid number")
