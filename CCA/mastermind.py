@@ -8,11 +8,11 @@ def check(bot, userChoices):
     correctPos = 0
     correctColours = 0
     for i in range(4):
-        botIndex = botCopy.index(userChoices[i]) if userChoices[i] in botCopy else -1
+        botIndex = botCopy.index(userChoices[i]) if userChoices[i] in botCopy else -1 # Use if and else to check if the index exists cause otherwise an error occurs
         if userChoices[i] == bot[i]:
             correctPos += 1
-        elif botIndex != -1:
-            if userChoices[botIndex] != userChoices[i]:
+        elif botIndex != -1: # Check if it is found
+            if userChoices[botIndex] != userChoices[i]: #Make sure that there is not a more correct choice
                 botCopy[botIndex] = " " # Prevents double counting
                 correctColours += 1
     print("\033[92mCorrect colours in correct position: " + str(correctPos) + "\033[0m")
@@ -34,7 +34,7 @@ def game():
             while True:
                 choice = input("Enter one colour: ") # Choose one colour at a time
                 if choice.lower() in loweredColours:
-                    userChoices.append(choice.lower())
+                    userChoices.append(choice.lower()) # Add choice to user list that will be compared
                     break
                 print("Invalid colour")
         check(bot, userChoices)

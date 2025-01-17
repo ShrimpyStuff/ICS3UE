@@ -6,7 +6,7 @@ def LetterChange (letter, up = True):
     if letter in upperCaseLetters:
         if up:
             return upperCaseLetters[(upperCaseLetters.index(letter)+shift)%26]
-        return upperCaseLetters[(upperCaseLetters.index(letter)-shift)%26]
+        return upperCaseLetters[(upperCaseLetters.index(letter)-shift)%26] #Use mod 26 (length of the list) to make sure it rolls over
     elif letter in lowerCaseLetters:
         if up:
             return lowerCaseLetters[(lowerCaseLetters.index(letter)+shift)%27]
@@ -17,13 +17,17 @@ def LetterChange (letter, up = True):
 while True:
     options = input("1) Make a code\n2) Decode a Message\n3) Exit\n")
     if options == "1":
-        message = input("Enter a message to encode: ")
-        shift = int(input("Enter a shift value: "))
-        word = ""
-        for letter in message:
-            word += LetterChange(letter)
-        print(word)
-        break
+        while True:
+            try:
+                message = input("Enter a message to encode: ")
+                shift = int(input("Enter a shift value: "))
+                word = "" # Use a blank string to shift letter by letter
+                for letter in message:
+                    word += LetterChange(letter)
+                print(word)
+                break
+            except ValueError:
+                print("Invalid shift value")
     elif options == "2":
         while True:
             try:
@@ -31,7 +35,7 @@ while True:
                 shift = int(input("Enter a shift value: "))
                 word = ""
                 for letter in message:
-                    word += LetterChange(letter, False)
+                    word += LetterChange(letter, False) # Letter change false to shift down
                 print(word)
                 break
             except ValueError:

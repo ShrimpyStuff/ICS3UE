@@ -13,7 +13,7 @@ def score(password: str):
     if score <= 2:
         print("Password Rejected. Too weak")
         return -1 # use a number as a return value for the outcome.
-    elif score <= 4:
+    elif score <= 4: #elif makes sure it is at least 3
         print("This password could be improved.")
         return 0
     else:
@@ -41,7 +41,7 @@ while True:
                         password = input("Choose a strong password: ")
                         scoreNum = score(password)
                         if scoreNum == 0: # has the option to be changed
-                            option = input("Would you like to improve it? ")
+                            option = input("Would you like to improve it? ").lower()
                             if option in ("n", "no"): #Use a tuple as it is constant
                                 break
                         elif scoreNum == 1:
@@ -59,38 +59,44 @@ while True:
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
     elif options == "2":
-        userId = input("Input a userID to change the password of: ").lower()
-        with open(os.path.dirname(__file__) + "/passwords.csv", "r") as csvfile: #To update the specific line I have to overwrite the file and write the ammended data
-            reader = list(csv.DictReader(csvfile)) # Force the iterator from DictReader into a list
-            if userId not in [row["userID"] for row in reader]:
-                print("User not found")
-                continue
-        with open(os.path.dirname(__file__) + "/passwords.csv", "w") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            for row in reader:
-                if row["userID"] != userId:
-                    writer.writerow(row)
-                else:
-                    while True:
-                        password = input("Choose a strong password: ")
-                        scoreNum = score(password)
-                        if scoreNum == 0:
-                            option = input("Would you like to improve it? ")
-                            if option in ("n", "no"): #Use a tuple as it does not need to change
+        try:
+            userId = input("Input a userID to change the password of: ").lower()
+            with open(os.path.dirname(__file__) + "/passwords.csv", "r") as csvfile: #To update the specific line I have to overwrite the file and write the ammended data
+                reader = list(csv.DictReader(csvfile)) # Force the iterator from DictReader into a list
+                if userId not in [row["userID"] for row in reader]:
+                    print("User not found") # Check for the user in the list
+                    continue
+            with open(os.path.dirname(__file__) + "/passwords.csv", "w") as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                for row in reader:
+                    if row["userID"] != userId: # Write the already existent row if it is not the user they selected
+                        writer.writerow(row)
+                    else:
+                        while True:
+                            password = input("Choose a strong password: ")
+                            scoreNum = score(password)
+                            if scoreNum == 0:
+                                option = input("Would you like to improve it? ")
+                                if option in ("n", "no"): #Use a tuple as it does not need to change
+                                    break
+                            elif scoreNum == 1:
                                 break
-                        elif scoreNum == 1:
-                            break
-                        else:
-                            continue
-                    writer.writerow({"userID": userId, "password": password})
-                    print("Updated")
+                            else:
+                                continue
+                        writer.writerow({"userID": userId, "password": password}) #Write in the new line
+                        print("Updated")
+        except FileNotFoundError:
+            print("File does not exist")
 
     elif options == "3":
-        with open(os.path.dirname(__file__) + "/passwords.csv", "r") as csvfile:
-            reader = csv.DictReader(csvfile)
-            userIds = [row["userID"] for row in reader]
-            print(f"The users in the database are: {", ".join(userIds)}")
+        try:
+            with open(os.path.dirname(__file__) + "/passwords.csv", "r") as csvfile:
+                reader = csv.DictReader(csvfile)
+                userIds = [row["userID"] for row in reader]
+                print(f"The users in the database are: {", ".join(userIds)}") # Join the userIDs as a string to print.
+        except FileNotFoundError:
+            print("File does not exist")
     elif options == "4":
         break
     else:
