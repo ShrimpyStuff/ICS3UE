@@ -12,7 +12,7 @@ def LetterChange (letter, up = True):
             return lowerCaseLetters[(lowerCaseLetters.index(letter)+shift)%27]
         return lowerCaseLetters[(lowerCaseLetters.index(letter)-shift)%27]
     else:
-        return(letter)
+        return(letter) # Allows punctuation to exist but does not shift it
 
 while True:
     options = input("1) Make a code\n2) Decode a Message\n3) Exit\n")

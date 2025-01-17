@@ -1,10 +1,10 @@
 import random
 
-colours = ["Blue", "Green", "Red", "Yellow", "Purple", "Orange", "Pink", "Brown"]
-loweredColours = [colour.lower() for colour in colours]
+colours = ["Blue", "Green", "Red", "Yellow", "Purple", "Orange", "Pink", "Brown"] #Only used for display purposes
+loweredColours = [colour.lower() for colour in colours] # Use lowered colour names when comparing answers
 
 def check(bot, userChoices):
-    botCopy = bot.copy()
+    botCopy = bot.copy() # Make a copy of the array so that you can remove the prechecked values to prevent duplicate counts
     correctPos = 0
     correctColours = 0
     for i in range(4):
@@ -28,11 +28,11 @@ def game():
 
     print("Enter 4 colours from: " + ", ".join(colours))
 
-    while bot != userChoices:
+    while bot != userChoices: # Wait till the two lists equal each other
         userChoices = []
         for _ in range(4):
             while True:
-                choice = input("Enter a colour: ")
+                choice = input("Enter one colour: ") # Choose one colour at a time
                 if choice.lower() in loweredColours:
                     userChoices.append(choice.lower())
                     break

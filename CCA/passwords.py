@@ -3,6 +3,7 @@ import os, csv
 def score(password: str):
     specialChars = "!@#$%^&*()-+~"
     score = 0
+    #Check each parameter
     if len(password) >= 8: score += 1
     if any(char.isupper() for char in password): score += 1 #Thank geeks for geeks for the any
     if any(char.islower() for char in password): score += 1
@@ -11,7 +12,7 @@ def score(password: str):
 
     if score <= 2:
         print("Password Rejected. Too weak")
-        return -1
+        return -1 # use a number as a return value for the outcome.
     elif score <= 4:
         print("This password could be improved.")
         return 0
@@ -27,7 +28,7 @@ while True:
     if options == "1":
         while True:
             try:
-                with open(os.path.dirname(__file__) + "/passwords.csv") as csvfile:
+                with open(os.path.dirname(__file__) + "/passwords.csv") as csvfile: # No need to specify read as that is the default
                     reader = csv.DictReader(csvfile, fieldnames=fieldnames)
 
                     userId = input("Enter an userID: ").lower()
@@ -39,13 +40,13 @@ while True:
                     while True:
                         password = input("Choose a strong password: ")
                         scoreNum = score(password)
-                        if scoreNum == 0:
+                        if scoreNum == 0: # has the option to be changed
                             option = input("Would you like to improve it? ")
-                            if option in ("n", "no"): #Use a tuple as it does not need to change
+                            if option in ("n", "no"): #Use a tuple as it is constant
                                 break
                         elif scoreNum == 1:
                             break
-                        else:
+                        else: #If value is -1 then the password was too weak and must be changed
                             continue
                     with open(os.path.dirname(__file__) + "/passwords.csv", "a") as csvfile:
                         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -53,13 +54,14 @@ while True:
                     print("Saved to database")
                     break
             except FileNotFoundError:
+                #If the file is not existent then create a new file with the correct headers for the dictionaries
                 with open(os.path.dirname(__file__) + "/passwords.csv", "a") as csvfile:
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
     elif options == "2":
         userId = input("Input a userID to change the password of: ").lower()
         with open(os.path.dirname(__file__) + "/passwords.csv", "r") as csvfile: #To update the specific line I have to overwrite the file and write the ammended data
-            reader = list(csv.DictReader(csvfile))
+            reader = list(csv.DictReader(csvfile)) # Force the iterator from DictReader into a list
             if userId not in [row["userID"] for row in reader]:
                 print("User not found")
                 continue
